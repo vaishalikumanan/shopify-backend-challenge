@@ -8,10 +8,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    image: {
-        type: Buffer,
-        required: true
-    },
+    // image: {
+    //     type: Buffer,
+    //     required: true
+    // },
     price: {
         type: Number,
         required: true,
