@@ -1,0 +1,29 @@
+{
+  "name": "shopify-backend-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaishalikumanan/shopify-backend-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaishalikumanan/shopify-backend-challenge/issues"
+  },
+  "homepage": "https://github.com/vaishalikumanan/shopify-backend-challenge#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.8",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.3",
+    "mongoose": "^5.8.11",
+    "validator": "^12.2.0"
+  }
+}
