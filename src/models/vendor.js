@@ -58,7 +58,7 @@ vendorSchema.methods.toJSON = function () {
 
 vendorSchema.methods.generateAuthToken = async function () {
     const vendor = this
-    const token = jwt.sign({ _id: vendor._id.toString() }, 'shopifybackendchallenge')
+    const token = jwt.sign({ _id: vendor._id.toString() }, 'challengeVendor')
 
     vendor.tokens = vendor.tokens.concat({ token })
     await vendor.save()

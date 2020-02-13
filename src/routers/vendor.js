@@ -1,7 +1,7 @@
 const express = require('express')
 const Vendor = require('../models/vendor')
 const Product = require('../models/product')
-const auth = require('../middleware/auth')
+const authVendor = require('../middleware/authVendor')
 
 const router = express.Router()
 
@@ -27,7 +27,7 @@ router.post('/vendors/login', async (req, res) => {
     }
 })
 
-router.post('/vendors/logout', auth, async (req, res) => {
+router.post('/vendors/logout', authVendor, async (req, res) => {
     try {
         if (req.query.all === 'true') {
             req.vendor.tokens = []
@@ -45,11 +45,11 @@ router.post('/vendors/logout', auth, async (req, res) => {
     }
 })
 
-router.get('/vendors/me', auth, async (req, res) => {
+router.get('/vendors/me', authVendor, async (req, res) => {
     res.send(req.vendor)
 })
 
-router.get('/vendors/products', auth, async (req, res) => {
+router.get('/vendors/products', authVendor, async (req, res) => {
     try {
         await req.vendor.populate({
             path: 'products'
@@ -61,7 +61,7 @@ router.get('/vendors/products', auth, async (req, res) => {
     }
 })
 
-router.post('/vendors/products', auth, async (req, res) => {
+router.post('/vendors/products', authVendor, async (req, res) => {
     console.log(req.body)
     const product = new Product({
         ...req.body,
@@ -76,7 +76,7 @@ router.post('/vendors/products', auth, async (req, res) => {
     }
 })
 
-router.get('/vendors/products/:id', auth, async (req, res) => {
+router.get('/vendors/products/:id', authVendor, async (req, res) => {
     const _id = req.params.id
 
     try {
@@ -92,7 +92,7 @@ router.get('/vendors/products/:id', auth, async (req, res) => {
     }
 })
 
-router.delete('/vendors/products/:id', auth, async (req, res) => {
+router.delete('/vendors/products/:id', authVendor, async (req, res) => {
     try {
         const product = await Product.findOneAndDelete({ _id: req.params.id, owner: req.vendor._id })
         

@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 const Vendor = require('../models/vendor')
 
-const auth = async (req, res, next) => {
+const authVendor = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
-        const decoded = jwt.verify(token, 'shopifybackendchallenge')
+        const decoded = jwt.verify(token, 'challengeVendor')
         const vendor = await Vendor.findOne({ _id: decoded._id, 'tokens.token': token })
 
         if (!vendor) {
@@ -19,4 +19,4 @@ const auth = async (req, res, next) => {
     }
 }
 
-module.exports = auth
+module.exports = authVendor
