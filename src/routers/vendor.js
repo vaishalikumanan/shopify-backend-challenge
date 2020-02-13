@@ -57,6 +57,16 @@ router.get('/vendors/me', authVendor, async (req, res) => {
     res.send(req.vendor)
 })
 
+// Delete vendor
+router.delete('/vendors/me', authVendor, async (req, res) => {
+    try {
+        await req.vendor.remove()
+        res.send(req.vendor)
+    } catch (e) {
+        res.status(500).send()
+    }
+}) 
+
 // Vendors can only add/update/delete products in their inventory, so check authentication first
 // Get list of products being sold by logged in vendor
 router.get('/vendors/products', authVendor, async (req, res) => {

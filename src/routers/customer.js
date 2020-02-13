@@ -54,4 +54,14 @@ router.get('/customers/me', authCustomer, async (req, res) => {
     res.send(req.customer)
 })
 
+// Delete customer
+router.delete('/customers/me', authCustomer, async (req, res) => {
+    try {
+        await req.customer.remove()
+        res.send(req.customer)
+    } catch (e) {
+        res.status(500).send()
+    }
+}) 
+
 module.exports = router

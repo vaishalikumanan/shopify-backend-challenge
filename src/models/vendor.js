@@ -94,6 +94,13 @@ vendorSchema.pre('save', async function (next) {
     }
 })
 
+// Delete all products in vendor's inventory before deleting the venor
+vendorSchema.pre('remove', async function (next) {
+    const vendor = this
+    await Product.deleteMany({ owner: vendor._id })
+    next()
+})
+
 const Vendor = mongoose.model('Vendor', vendorSchema)
 
 module.exports = Vendor
