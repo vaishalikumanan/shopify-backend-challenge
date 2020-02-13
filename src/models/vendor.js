@@ -39,13 +39,14 @@ const vendorSchema = new mongoose.Schema({
     timestamps: true
 })
 
+// Define relationship between products and their owner (vendors)
 vendorSchema.virtual('products', {
     ref: 'Product',
     localField: '_id',
     foreignField: 'owner'
 })
 
-
+// Customize stringify to hide password and tokens
 vendorSchema.methods.toJSON = function () {
     const vendor = this
     const vendorObject = vendor.toObject()
@@ -56,6 +57,7 @@ vendorSchema.methods.toJSON = function () {
     return vendorObject
 }
 
+// Generate a new authentication token for a customer
 vendorSchema.methods.generateAuthToken = async function () {
     const vendor = this
     const token = jwt.sign({ _id: vendor._id.toString() }, 'challengeVendor')
@@ -66,6 +68,7 @@ vendorSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+// Find a customer by email address and password
 vendorSchema.statics.findByCredentials = async (email, password) => {
     const vendor = await Vendor.findOne({ email })
 
@@ -82,6 +85,7 @@ vendorSchema.statics.findByCredentials = async (email, password) => {
     return vendor
 }
 
+// Hash password every time it's modified for security
 vendorSchema.pre('save', async function (next) {
     const vendor = this
     

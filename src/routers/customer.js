@@ -4,6 +4,7 @@ const authCustomer = require('../middleware/authCustomer')
 
 const router = express.Router()
 
+// Register a customer
 router.post('/customers/register', async (req, res) => {
     const customer = new Customer(req.body)
 
@@ -16,6 +17,7 @@ router.post('/customers/register', async (req, res) => {
     }
 })
 
+// Login to customer account
 router.post('/customers/login', async (req, res) => {
     try {
         const customer = await Customer.findByCredentials(req.body.email, req.body.password)
@@ -26,12 +28,15 @@ router.post('/customers/login', async (req, res) => {
     }
 })
 
+// Logout of customer account
 router.post('/customers/logout', authCustomer, async (req, res) => {
     try {
         if (req.query.all === 'true') {
+            // Logout of all sessions (remove all tokens)
             req.customer.tokens = []
         }
         else {
+            // Logout of current session
             req.customer.tokens = req.customer.tokens.filter((token) => {
                 return token.token !== req.token
             })
@@ -44,6 +49,7 @@ router.post('/customers/logout', authCustomer, async (req, res) => {
     }
 })
 
+// Get customer profile information
 router.get('/customers/me', authCustomer, async (req, res) => {
     res.send(req.customer)
 })

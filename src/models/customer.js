@@ -38,6 +38,7 @@ const customerSchema = new mongoose.Schema({
     timestamps: true
 })
 
+// Customize stringify to hide password and tokens
 customerSchema.methods.toJSON = function () {
     const customer = this
     const customerObject = customer.toObject()
@@ -48,6 +49,7 @@ customerSchema.methods.toJSON = function () {
     return customerObject
 }
 
+// Generate a new authentication token for a customer
 customerSchema.methods.generateAuthToken = async function () {
     const customer = this
     const token = jwt.sign({ _id: customer._id.toString() }, 'challengeCustomer')
@@ -58,6 +60,7 @@ customerSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+// Find a customer by email address and password
 customerSchema.statics.findByCredentials = async (email, password) => {
     const customer = await Customer.findOne({ email })
 
@@ -74,6 +77,7 @@ customerSchema.statics.findByCredentials = async (email, password) => {
     return customer
 }
 
+// Hash password every time it's modified for security
 customerSchema.pre('save', async function (next) {
     const customer = this
     

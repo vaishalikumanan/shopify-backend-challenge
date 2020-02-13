@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const Customer = require('../models/customer')
 
+// Check if user is an authenticated customer
 const authCustomer = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')

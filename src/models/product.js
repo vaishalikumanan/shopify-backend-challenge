@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
-
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -8,10 +6,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    // image: {
-    //     type: Buffer,
-    //     required: true
-    // },
+    image: {
+        type: Buffer,
+        required: true
+    },
     price: {
         type: Number,
         required: true,
@@ -38,7 +36,10 @@ const productSchema = new mongoose.Schema({
         ref: 'Vendor'
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        getters: true
+    }
 })
 
 const Product = mongoose.model('Product', productSchema)
