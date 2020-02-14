@@ -1,9 +1,9 @@
 const express = require('express')
-const multer = require('multer')
 const sharp = require('sharp')
 const Vendor = require('../models/vendor')
 const Product = require('../models/product')
-const authVendor = require('../middleware/authVendor')
+const { authVendor } = require('../middleware/auth')
+const upload = require('../middleware/upload')
 
 const router = express.Router()
 
@@ -78,21 +78,6 @@ router.get('/vendors/products', authVendor, async (req, res) => {
         res.send(req.vendor.products)
     } catch(e) {
         res.status(500).send()
-    }
-})
-
-// Middleware for uploading files
-const upload = multer({
-    limits: {
-        filesize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        // Make sure file is an image
-        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-            return cb(new Error('Please upload an image'))
-        }
-
-        cb(undefined, true)
     }
 })
 
