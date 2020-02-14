@@ -42,6 +42,16 @@ const productSchema = new mongoose.Schema({
     }
 })
 
+// Customize stringify to hide image buffer (takes up a lot of space)
+productSchema.methods.toJSON = function () {
+    const product = this
+    const productObject = product.toObject()
+
+    delete productObject.image
+    
+    return productObject
+}
+
 const Product = mongoose.model('Product', productSchema)
 
 module.exports = Product
